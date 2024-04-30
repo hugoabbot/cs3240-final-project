@@ -1,0 +1,52 @@
+<!-- reports/templates/reports/submit_report_success.html -->
+{% extends 'base.html' %}
+
+</main>
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Submitted Successfully</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container text-center">
+        <h1>Report Submitted Successfully</h1>
+        <p>Thank you for submitting your report!</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+            <a class="btn btn-primary me-md-2" href="/">Return Home</a>
+        </div>
+    </div>
+
+
+ 
+</body>
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+    .container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 100%;
+    }
+    .buttonCenter{
+        width: 50%; /* Ensures the div takes full width for horizontal centering */
+        display: flex;
+        justify-content: center; /* Center horizontally inside the container */
+        margin-top: 20px; /* Optional: Adds some space above the button */ 
+    }
+</style>
+
+{% include 'footer.html' %}
+{% endblock %}
+</main>
+</html>

@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% block title %}Select Residence Page{% endblock %}
+
+
+{% block content %}
+
+     <div class="d-flex flex-column min-vh-100">
+<main>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center">Select Residence Page</h1>
+            <form id="residenceForm" method="post" action="{% url 'save_residence_selection' %}" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="report_type" class="form-label">Residence Type</label>
+                    <select id="report_type" name="report_type" class="form-select" required>
+                        <option value="" selected disabled>--- Select Residence Type ---</option>
+                        {% for report_type in report_types %}
+                        <option value="{{ report_type }}">{{ report_type }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="residence" class="form-label">Residence</label>
+                    <select id="residence" name="residence" class="form-select" disabled required>
+                        <option value="" selected disabled>--- Select Residence ---</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="building" class="form-label">Building</label>
+                    <select id="building" name="building" class="form-select" disabled required>
+                        <option value="" selected disabled>--- Select Building ---</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="floor" class="form-label">Floor</label>
+                    <input type="text" id="floor" name="floor" class="form-control" disabled required>
+                </div>
+
+                <div class="mb-3 d-flex justify-content-between">
+                    <button type="button" onclick="history.go(-1);" class="btn btn-primary2">Cancel</button>
+                    <button type="submit" id="confirmButton" class="btn btn-primary" disabled>Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    function checkFields() {
+        var reportType = $('#report_type').val();
+        var residence = $('#residence').val();
+        var building = $('#building').val();
+        var floor = $('#floor').val();
+
+        if (reportType && residence && building && floor) {
+            $('#confirmButton').prop('disabled', false);
+        } else {
+            $('#confirmButton').prop('disabled', true);
+        }
+    }
+
+    $('#report_type').change(function() {
+        var selected_report_type = $(this).val();
+        $('#residence').empty().prop('disabled', true).html('<option value="" selected disabled>--- Select Residence ---</option>');
+        $('#building').empty().prop('disabled', true).html('<option value="" selected disabled>--- Select Building ---</option>');
+
+        if (selected_report_type) {
+            $.ajax({
+                url: "{% url 'get_residences' %}",
+                data: {'report_type': selected_report_type},
+                dataType: 'json',
+                success: function(data) {
+                    $.each(data.residences, function(index, value) {
+                        $('#residence').append($('<option>', {
+                            value: value,
+                            text: value
+                        }));
+                    });
+                    $('#residence').prop('disabled', false);
+                    checkFields();
+                }
+            });
+        }
+    });
+
+    $('#residence').change(function() {
+        var selected_residence = $(this).val();
+        $('#building').empty().prop('disabled', true).html('<option value="" selected disabled>--- Select Building ---</option>');
+
+        if (selected_residence) {
+            $.ajax({
+                url: "{% url 'get_buildings' %}",
+                data: {'residence': selected_residence},
+                dataType: 'json',
+                success: function(data) {
+                    $.each(data.buildings, function(index, value) {
+                        $('#building').append($('<option>', {
+                            value: value,
+                            text: value
+                        }));
+                    });
+                    $('#building').prop('disabled', false);
+                    checkFields();
+                }
+            });
+        }
+    });
+
+    $('#building').change(function() {
+    var selected_building = $(this).val();
+    if (selected_building) {
+        $('#floor').prop('disabled', false);
+    } else {
+        $('#floor').prop('disabled', true);
+    }
+    checkFields();
+});
+
+
+    $('#building').change(checkFields);
+    $('#floor').keyup(checkFields);
+});
+</script>
+</main>
+<footer class="text-center text-lg-start bg-body-tertiary text-muted" style="display: flex; justify-content: center; align-items: center;">
+    <div class="footer-content">
+        © 2024 Copyright:
+        <a class="text-reset fw-bold" href="{% url 'disclaimer' %}">Disclaimer</a>
+    </div>
+</footer>
+ </div>
+{% endblock %}
+
+
+<style>
+
+.mb-3 .btn-primary2 {
+    margin-top:20px;
+    margin-bottom: 20px;
+    color: #ffffff;  /* White text color */
+    background-color: var(--uva-blue);  /* Muted light blue */
+    border-color: var(--uva-blue);
+    transition: background-color 0.3s ease;
+    border-radius: .9rem;
+    padding: 10px 10px;
+}
+
+
+.mb-3 .btn-primary2:hover {
+    background-color: var(--uva-light-blue);  /* Lighter blue for hover */
+    color:  #090000 ; }
+
+
+
+
+
+    .mb-3 .btn-primary {
+        margin-top:20px;
+        margin-bottom: 20px;
+        background-color: var(--uva-orange);
+        border-color: var(--uva-orange);
+        color: white;
+        /* Text color is white by default */
+        transition: background-color 0.3s ease;
+        /* Smooth transition for hover effect */
+    
+        border-radius: .9rem;
+        /* Optional: Rounds the corners of the buttons */
+        padding: 10px 10px;
+    }
+    
+    .mb-3 .btn-primary:hover {
+        background-color: #ff7f50;
+        /* Lighter orange for hover */
+        border-color: #ff7f50;
+        /* Lighter border color for hover */
+        color: white;
+        /* Text color remains white on hover */
+    }
+    
+    .mb-3 .btn-primary:focus {
+        box-shadow: 0 0 0 0.25rem rgba(245, 102, 0, 0.5);
+        /* Shadow with orange tint for focus */
+    }
+</style>

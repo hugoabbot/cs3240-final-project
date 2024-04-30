@@ -1,0 +1,314 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+<style>
+/* Ensure the wrapper fills the viewport height */
+#content-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1; /* Ensure main content area grows to fill remaining space */
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+</style>
+
+{% block content %}
+ <div class="d-flex flex-column min-vh-100">
+    <main>
+    <div class="context-box">
+        <div class="container">
+            {% for group in request.user.groups.all %}
+            {% if group.name == 'Site Admins' %}
+            <h3>Showing All Reports</h3>
+            {% else %}
+            <h1>Your Reports</h1>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+        {% if user.is_authenticated %}
+        <div class="accordion" id="reportAccordion">
+            {% for group in request.user.groups.all %}
+                {% if group.name == 'Site Admins' %}
+                <!-- New Reports -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="newReportsHeading">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#newReportsCollapse" aria-expanded="true" aria-controls="newReportsCollapse">
+                            New Reports
+                        </button>
+                    </h2>
+                    <div id="newReportsCollapse" class="accordion-collapse collapse show" aria-labelledby="newReportsHeading" data-bs-parent="#reportAccordion">
+                        <div class="accordion-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>DATE</th>
+                                        <th>TYPE</th>
+                                        <th>LOCATION</th>
+                                        <th>ADDITIONAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for group in request.user.groups.all %}
+                                    {% if group.name == 'Site Admins' %}
+                                        {% for report in reports %}
+                                            {% if report.status == 'New' %}
+                                                <tr style="cursor: pointer;" onclick="window.location.href='{% url 'report_detail' report.id %}'">
+                                                    <td>{{ report.submission_timestamp }}</td>
+                                                    <td>{{ report.report_type }}</td>
+                                                    <td>{{ report.residence }}</td>
+                                                    <td>
+                                                        {% if report.building %}
+                                                            Building: {{ report.building }}<br>
+                                                        {% endif %}
+                                                        {% if report.floor %}
+                                                            Floor: {{ report.floor }}<br>
+                                                        {% endif %}
+                                                        {% if report.room %}
+                                                            Room: {{ report.room }}<br>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for report in reports %}
+                                            {% if report.user.username == user.username %}
+                                                 {% if report.status != 'Resolved' %}
+                                                <tr style="cursor: pointer;" onclick="window.location.href='{% url 'report_detail' report.id %}'">
+                                                    <td>{{ report.status }}</td>
+                                                    <td>{{ report.submission_timestamp }}</td>
+                                                    <td>{{ report.report_type }}</td>
+                                                    <td>{{ report.residence }}</td>
+                                                    <td>
+                                                        {% if report.building %}
+                                                            Building: {{ report.building }}<br>
+                                                        {% endif %}
+                                                        {% if report.floor %}
+                                                            Floor: {{ report.floor }}<br>
+                                                        {% endif %}
+                                                        {% if report.room %}
+                                                            Room: {{ report.room }}<br>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                    {% else %}
+                                    <!-- New Reports -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="newReportsHeading">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#newReportsCollapse" aria-expanded="true" aria-controls="newReportsCollapse">
+                                        Open Reports
+                                    </button>
+                                </h2>
+                                <div id="newReportsCollapse" class="accordion-collapse collapse show" aria-labelledby="newReportsHeading" data-bs-parent="#reportAccordion">
+                                    <div class="accordion-body">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>STATUS</th>
+                                                    <th>DATE</th>
+                                                    <th>TYPE</th>
+                                                    <th>LOCATION</th>
+                                                    <th>ADDITIONAL</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    {% for report in reports %}
+                                                        {% if report.user.username == user.username %}
+                                                             {% if report.status != 'Resolved' %}
+                                                            <tr style="cursor: pointer;" onclick="window.location.href='{% url 'report_detail' report.id %}'">
+                                                                <td>{{ report.status }}</td>
+                                                                <td>{{ report.submission_timestamp }}</td>
+                                                                <td>{{ report.report_type }}</td>
+                                                                <td>{{ report.residence }}</td>
+                                                                <td>
+                                                                    {% if report.building %}
+                                                                        Building: {{ report.building }}<br>
+                                                                    {% endif %}
+                                                                    {% if report.floor %}
+                                                                        Floor: {{ report.floor }}<br>
+                                                                    {% endif %}
+                                                                    {% if report.room %}
+                                                                        Room: {{ report.room }}<br>
+                                                                    {% endif %}
+                                                                </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                  {% endif %}
+            {% endfor %}
+            {% for group in request.user.groups.all %}
+                    {% if group.name == 'Site Admins' %}
+                <!-- In Progress Reports -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="inProgressReportsHeading">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#inProgressReportsCollapse" aria-expanded="true" aria-controls="inProgressReportsCollapse">
+                            In Progress Reports
+                        </button>
+                    </h2>
+                    <div id="inProgressReportsCollapse" class="accordion-collapse collapse" aria-labelledby="inProgressReportsHeading" data-bs-parent="#reportAccordion">
+                        <div class="accordion-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>DATE</th>
+                                        <th>TYPE</th>
+                                        <th>LOCATION</th>
+                                        <th>ADDITIONAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for group in request.user.groups.all %}
+                                    {% if group.name == 'Site Admins' %}
+                                        {% for report in reports %}
+                                            {% if report.status == 'In Progress' %}
+                                                <tr style="cursor: pointer;" onclick="window.location.href='{% url 'report_detail' report.id %}'">
+                                                    <td>{{ report.submission_timestamp }}</td>
+                                                    <td>{{ report.report_type }}</td>
+                                                    <td>{{ report.residence }}</td>
+                                                    <td>
+                                                        {% if report.building %}
+                                                            Building: {{ report.building }}<br>
+                                                        {% endif %}
+                                                        {% if report.floor %}
+                                                            Floor: {{ report.floor }}<br>
+                                                        {% endif %}
+                                                        {% if report.room %}
+                                                            Room: {{ report.room }}<br>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% endfor %}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="resolvedReportsHeading">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#resolvedReportsCollapse" aria-expanded="false"
+                        aria-controls="resolvedReportsCollapse">
+                        Resolved Reports
+                    </button>
+                </h2>
+                <div id="resolvedReportsCollapse" class="accordion-collapse collapse"
+                    aria-labelledby="resolvedReportsHeading" data-bs-parent="#reportAccordion">
+                    <div class="accordion-body">
+                        <div class="table-wrapper">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>DATE</th>
+                                        <th>TYPE</th>
+                                        <th>LOCATION</th>
+                                        <th>ADDITIONAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                                 {% for group in request.user.groups.all %}
+                            {% if group.name == 'Site Admins' %}
+                                {% for report in reports %}
+                                    {% if report.status == 'Resolved' %}
+                                        <tr style="cursor: pointer;" onclick="window.location.href='{% url 'report_detail' report.id %}'">
+                                            <td>{{ report.submission_timestamp }}</td>
+                                            <td>{{ report.report_type }}</td>
+                                            <td>{{ report.residence }}</td>
+                                            <td>
+                                                {% if report.building %}
+                                                    Building: {{ report.building }}<br>
+                                                {% endif %}
+                                                {% if report.floor %}
+                                                    Floor: {{ report.floor }}<br>
+                                                {% endif %}
+                                                {% if report.room %}
+                                                    Room: {{ report.room }}<br>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                {% for report in reports %}
+                                    {% if report.user.username == user.username %}
+                                         {% if report.status == 'Resolved' %}
+                                        <tr style="cursor: pointer;" onclick="window.location.href='{% url 'report_detail' report.id %}'">
+                                            <td>{{ report.submission_timestamp }}</td>
+                                            <td>{{ report.report_type }}</td>
+                                            <td>{{ report.residence }}</td>
+                                            <td>
+                                                {% if report.building %}
+                                                    Building: {{ report.building }}<br>
+                                                {% endif %}
+                                                {% if report.floor %}
+                                                    Floor: {{ report.floor }}<br>
+                                                {% endif %}
+                                                {% if report.room %}
+                                                    Room: {{ report.room }}<br>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>You are submitting anonymously. You will not be able to view your past reports.</p>
+        {% endif %}
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-center">
+        <a class="btn btn-primary me-md-2" href="/">Return Home</a>
+    </div>
+    </main>
+<footer class="text-center text-lg-start bg-body-tertiary text-muted" style="display: flex; justify-content: center; align-items: center;">
+    <div class="footer-content">
+        © 2024 Copyright:
+        <a class="text-reset fw-bold" href="{% url 'disclaimer' %}">Disclaimer</a>
+    </div>
+</footer>
+</div>
+{% endblock %}
+
+

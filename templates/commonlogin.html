@@ -1,0 +1,40 @@
+{% load socialaccount %}
+{% load bootstrap5 %}
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style2.css' %}">
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% bootstrap_messages %}
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+  <div class="hero-banner2 text-center">
+    <h1 class="display-4 fw-bold text-white">UVA Resident Advisor Connect: Resident</h1>
+  </div>
+        
+    <main class="container my-5 text-center">
+           <h5>  Welcome {{ user.first_name}}!</h5>
+
+        <a href="{% url 'select_residence_type' %}" class="btn btn-primary">Submit a Report</a>
+        <a href="{% url 'report_list' %}" class="btn btn-primary">View Your Reports</a>
+
+        
+   <!--     <div class="personal">
+            {% if not user.userprofile %}
+                <p><strong>Residence:</strong> {{ user.userprofile.residence }}</p>
+                <p><strong>Building:</strong> {{ user.userprofile.building }}</p>
+                <p><strong>Floor:</strong> {{ user.userprofile.floor }}</p>
+                <a href="{% url 'user_residence' %}">Change Residence?</a>
+             {% endif %}
+             {% if not user.userprofile %}
+                <a href="{% url 'user_residence' %}" class="btn btn-primary">User Residence</a>
+            {% endif %}
+        </div> -->
+
+    </main>
+
+    {% include 'footer.html' %}
+</body>

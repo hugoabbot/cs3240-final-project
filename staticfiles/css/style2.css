@@ -1,0 +1,205 @@
+:root {
+    --uva-blue: #232d4b;
+    --uva-orange: #f56600;
+    --uva-light-blue: #e6e7e8;
+    --uva-dark-blue: #00214d;
+    --uva-text: #333;
+    --uva-secondary: #f7f9fa;
+}
+
+body {
+    background-color: var(--uva-secondary);
+    color: var(--uva-text);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    flex-grow: 1;
+    justify-content: flex-start;
+    /* Aligns content to the top */
+    padding-top: 47px;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+    margin-bottom: 40px;
+    /* Adjust based on footer height */
+    padding: 0rem;
+    height: 100%;
+    margin-bottom: 40px;
+    
+}
+
+.btn {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+body .btn-primary {
+    background-color: var(--uva-orange);
+    border-color: var(--uva-orange);
+    color: white;
+    /* Text color is white by default */
+    transition: background-color 0.3s ease;
+    /* Smooth transition for hover effect */
+    padding: 1rem 2rem;
+    /* Increase padding for larger buttons */
+    font-size: 1.25rem;
+    /* Increase font size for larger text */
+    border-radius: .9rem;
+    /* Optional: Rounds the corners of the buttons */
+    width: 40%;
+    /* Makes the button stretch to the full width of its parent */
+    margin-bottom: 20px;
+}
+
+body .btn-primary:hover {
+    background-color: #ff7f50;
+    /* Lighter orange for hover */
+    border-color: #ff7f50;
+    /* Lighter border color for hover */
+    color: white;
+    /* Text color remains white on hover */
+}
+
+body .btn-primary:focus {
+    box-shadow: 0 0 0 0.25rem rgba(245, 102, 0, 0.5);
+    /* Shadow with orange tint for focus */
+}
+
+h1 {
+    color: var(--uva-blue);
+}
+
+.welcome {
+    margin: .5;
+}
+
+body .hero-banner {
+    background-image: url('../img/Thumb_FootballMoveIn.jpg');
+    background-size: cover;
+    background-position: center center;
+    height: 400px;
+    /* or any other value that fits your design */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    /* White color text */
+    margin-top: 0;
+    position: relative;
+    margin-bottom: -30px;
+
+}
+
+body .hero-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.3);
+    /* Adjust opacity for the shade, here it's 30% */
+    z-index: 1;
+}
+
+
+/* Ensure that the text is white and stands out over the background image */
+body .hero-banner h1 {
+    color: #ffffff;
+    /* White color */
+    position: relative;
+    z-index: 2;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+body .personal {
+    color: var(--uva-blue);
+    flex: 1;
+    padding: 0 30%; /* Add padding to the left and right sides */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the content horizontally */
+  }
+
+  /* for common user logged in image */
+  body .hero-banner2 {
+    background-image: url('../img/800.jpg');
+    background-size: cover;
+    background-position: center center;
+    height: 400px;
+    /* or any other value that fits your design */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    /* White color text */
+    margin-top: 0;
+    position: relative;
+    margin-bottom: -30px;
+
+}
+
+body .hero-banner2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.3);
+    /* Adjust opacity for the shade, here it's 30% */
+    z-index: 1;
+}
+
+
+/* Ensure that the text is white and stands out over the background image */
+body .hero-banner2 h1 {
+    color: #ffffff;
+    /* White color */
+    position: relative;
+    z-index: 2;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* for admin user logged in image */
+body .hero-banner3 {
+    background-image: url('../img/801.jpg');
+    background-size: cover;
+    background-position: center center;
+    height: 400px;
+    /* or any other value that fits your design */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    /* White color text */
+    margin-top: 0;
+    position: relative;
+    margin-bottom: -30px;
+
+}
+
+body .hero-banner3::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.3);
+    /* Adjust opacity for the shade, here it's 30% */
+    z-index: 1;
+}
+
+
+/* Ensure that the text is white and stands out over the background image */
+body .hero-banner3 h1 {
+    color: #ffffff;
+    /* White color */
+    position: relative;
+    z-index: 2;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}

@@ -1,0 +1,117 @@
+{% load socialaccount %}
+{% load bootstrap5 %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% bootstrap_messages %}
+
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main class="container my-5">
+        <div class="context-box">
+            <h1>Disclaimer</h1>
+            <p>
+                This is a mock reporting site created as a class project for CS 3240 (Advanced Software Development) at the University of Virginia. The system is not monitored and no real information should be submitted. If you have any actual relevant inquiries, direct them to an official Resident Advisor.
+            </p>
+            <br>
+            <h4>List of Group Members:</h4>
+            <ol>
+                <li>Price Mckinney, Scrum Master (wpm7hs)</li>
+                <li>Yanson Khuu, DevOps Manager (fbx2jt)</li>
+                <li>Kaitlyn Kreth, Requirements Manager (qte7kg)</li>
+                <li>Megan Lewis, Testing Manager (nxk7tq)</li>
+                <li>Hugo Abbot, Software Architect (drt3sm)</li>
+            </ol>
+        </div>
+        <div class="text-center">
+            <a href="{% url 'index' %}" class="btn btn-primary">Return Home</a>
+        </div>
+</main>
+<footer class="text-center text-lg-start bg-body-tertiary text-muted" style="display: flex; justify-content: center; align-items: center;">
+    <div class="footer-content">
+        © 2024 Copyright
+    </div>
+</footer>
+ </div>
+
+  
+</body>
+</html>
+
+
+
+
+<style>
+    :root {
+        --uva-blue: #232d4b;
+        --uva-orange: #f56600;
+        --uva-light-blue: #e6e7e8;
+        --uva-dark-blue: #00214d;
+        --uva-text: #333;
+        --uva-secondary: #f7f9fa;
+    }
+    
+    body {
+        background-color: var(--uva-secondary);
+        color: var(--uva-text);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        flex-grow: 1;
+        justify-content: flex-start;
+        padding-top: 47px;
+    }
+    
+    .context-box {
+        border: 2px solid var(--uva-dark-blue);
+        background-color: white;
+        padding: 20px;
+        max-width: 600px;
+        margin: 40px auto;
+        border-radius: 0.5rem;
+        text-align: center;
+    }
+    
+    ol {
+        list-style-position: inside;
+        margin: 0;
+        padding-left: 0;
+        text-align: left;
+        margin-left: 4rem;
+    }
+    
+    ol li {
+        margin-bottom: 0.5rem;
+    }
+    
+    .btn-primary {
+  background-color: var(--uva-orange);
+  border-color: var(--uva-orange);
+  color: white; /* Text color is white by default */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+
+  padding: 1rem 2rem; /* Increase padding for larger buttons */
+  font-size: 1rem; /* Increase font size for larger text */
+  border-radius: .9rem; /* Optional: Rounds the corners of the buttons */
+  width: 20%; /* Makes the button stretch to the full width of its parent */
+    
+}
+    
+    .btn-primary:hover {
+  background-color: #ff7f50; /* Lighter orange for hover */
+  border-color: #ff7f50; /* Lighter border color for hover */
+  color: white; /* Text color remains white on hover */
+}
+
+.btn-primary:focus {
+  box-shadow: 0 0 0 0.25rem rgba(245, 102, 0, 0.5); /* Shadow with orange tint for focus */
+}
+    .text-center{
+        margin-bottom: 20px;
+    }
+</style>

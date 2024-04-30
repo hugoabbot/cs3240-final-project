@@ -1,0 +1,23 @@
+{% load static %}
+<head>
+    <style>
+        footer {
+            flex-shrink: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: var(--uva-blue); /* Updated to use variable */
+            margin-top: 20px;
+        }
+        .footer-content {
+            color: var(--uva-light-blue); /* Light blue text for contrast */
+            padding: 10px; /* Adjust padding as needed */
+            text-align: center;
+        }
+    </style>
+</head>
+<footer class="text-center text-lg-start bg-body-tertiary text-muted">
+    <div class="footer-content">
+        © 2024 Copyright:
+        <a class="text-reset fw-bold" href="{% url 'disclaimer' %}">Disclaimer</a>
+    </div>
+</footer>

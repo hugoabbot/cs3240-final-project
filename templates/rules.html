@@ -1,0 +1,75 @@
+{% load socialaccount %}
+{% load bootstrap5 %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/style2.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% bootstrap_messages %}
+</head>
+<body>
+    {% include 'navbar.html' %}
+        <div class="d-flex flex-column min-vh-100">
+    <main class="container my-5">
+        <div class="context-box">
+            <h1>UVA Resident Advisor Position Description</h1>
+            <p>
+                The Resident Advisor (RA) supports the residents of their community in order to achieve 
+                Housing & Residence Life’s mission to work collaboratively to create inclusive, welcoming 
+                communities where residents are empowered to engage their potential as 
+                scholars and leaders through self-governance and participation in their residential community.
+            </p>
+            <br>
+            <h4>University and Charlottesville-area Resources:</h4>
+            <ol>
+                <!-- Your list items here -->
+                <li>If you are experiencing an emergency, please call <a href="tel:+911">911</a> or go to your nearest emergency room. </li>
+                    <li>UVA Student Health Center's Counseling and Psychological Services (CAPS): <a href="tel:+14342435150">434-243-5150</a> (or <a href="tel:+14349727004">434-972-7004</a> for after hours and weekend crisis assistance) </li>
+                    <li>Madison House provides an anonymously and confidential HELP Line at any hour of any day: <a href="tel:+14342958255">434-295-8255</a></li>
+                    <li>Women’s Center Counseling Staff and Confidential Advocates (for students of all genders): <a href="https://womenscenter.virginia.edu/counseling/our-counseling-services" target="Women's Center">Women's Center</a></li>
+                    <li>Report directly to UVA Honor Committee: <a href="https://honor.virginia.edu/resources/reporting" target="Honor">Honor</a></li>
+                <li>UVA Office of Equal Opportunity and Civil Rights: <a href="mailto:UVAEOCR@virginia.edu">UVAEOCR@virginia.edu</a></li>
+            </ol>
+        </div>
+         <div class="text-center">
+            <a href="{% url 'index' %}" class="btn btn-primary">Return Home</a>
+        </div>
+</main>
+<footer class="text-center text-lg-start bg-body-tertiary text-muted" style="display: flex; justify-content: center; align-items: center;">
+    <div class="footer-content">
+        © 2024 Copyright:
+        <a class="text-reset fw-bold" href="{% url 'disclaimer' %}">Disclaimer</a>
+    </div>
+</footer>
+ </div>
+</body>
+</html>
+
+
+<style>
+    
+    .context-box {
+      border: 2px solid var(--uva-dark-blue);
+      background-color: white;
+      padding: 20px;
+      max-width: 600px;
+      margin: 40px auto;
+      border-radius: 0.5rem;
+    }
+    
+    ol {
+      list-style-position: inside;
+      margin-left: 0;
+      padding-left: 0;
+      text-align: left;
+    }
+    
+    ol li {
+      margin-bottom: 0.5rem;
+    }
+    
+    
+</style>

@@ -1,0 +1,96 @@
+{% load socialaccount %}
+{% load bootstrap5 %}
+
+<head>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style2.css' %}">
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  {% bootstrap_messages %}
+</head>
+
+<body>
+  {% include 'navbar.html' %}
+  <div class="hero-banner3 text-center">
+    <h1 class="display-4 fw-bold text-white">UVA Resident Advisor Connect: Staff</h1>
+  </div>
+  <script>
+    fetch("{% url 'remove_from_common_users' %}", {
+      method: "GET",
+      credentials: "same-origin",
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+        "Content-Type": "application/json",
+        "X-CSRFToken": "{{ csrf_token }}",
+      },
+    })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  </script>
+
+  {% if user.is_authenticated %}
+  <main class="container my-5 text-center">
+    <h5> Welcome {{ user.first_name}}!</h5>
+  
+    {% if not user.userprofile %}
+        <div class="alert alert-primary d-flex align-items-center" role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="info-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+               <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+            </svg>
+            <div>
+                Hit the select residence button to enter your residence location and filter reports accordingly
+            </div>
+        </div>
+    {% endif %}
+  
+    <a href="{% url 'report_list' %}" class="btn btn-primary">View all Reports</a>
+
+
+    {% if user.userprofile %}
+    <a href="{% url 'filter_reports' %}" class="btn btn-primary">View Reports at {{user.userprofile.residence}}</a>
+
+    <!--          <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                <h5 class="Residence Info">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{ user.userprofile.residence }}</li>
+                <li class="list-group-item">{{ user.userprofile.building }}</li>
+                <li class="list-group-item">{{ user.userprofile.floor }}</li>
+              </ul>
+              <div class="card-body">
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+              </div>
+            </div> -->
+    <div class="personal">
+      <table class="table table-bordered mt-3 table-responsive">
+        <tbody>
+          <tr>
+            <th scope="row">Residence:</th>
+            <td>{{ user.userprofile.residence }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Building:</th>
+            <td>{{ user.userprofile.building }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Floor:</th>
+            <td>{{ user.userprofile.floor }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="{% url 'user_residence' %}" class="btn btn-secondary">Change Residence</a>
+    </div>
+    {% else %}
+    <a href="{% url 'user_residence' %}" class="btn btn-primary">Select Residence</a>
+    {% endif %}
+  </main>
+  {% endif %}
+  {% include 'footer.html' %}
+</body>

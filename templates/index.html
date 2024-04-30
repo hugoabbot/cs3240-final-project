@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style2.css' %}">
+  {% load socialaccount %}
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  {% bootstrap_messages %}
+</head>
+<body>
+  {% include 'navbar.html' %}
+  <div class="hero-banner text-center">
+    <h1 class="display-4 fw-bold text-white">UVA Resident Advisor Connect</h1>
+  </div>
+
+  <main class="container my-5 text-center">
+    {% if user.is_authenticated %}
+      {% if request.user.groups.all.count == 0 and user.is_staff %}
+        <p>Welcome Django admin. Please use a different account to access the website.</p>
+        <a href="{% url 'custom_logout' %}" class="btn btn-primary">Log out</a>
+      {% else %}
+        {% for group in request.user.groups.all %}
+          {% if group.name == 'Site Admins' %}
+              <script type="text/javascript">
+                window.onload = function() {
+                  window.location.href = "{% url 'stafflogin' %}";
+                }
+              </script>
+          {% else %}
+              <script type="text/javascript">
+                window.onload = function() {
+                  window.location.href = "{% url 'commonlogin' %}";
+                }
+              </script>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% else %}
+      <a href="{% provider_login_url 'google' %}" class="btn btn-primary">Log In With Google</a>
+      <a href="{% url 'select_residence_type' %}" class="btn btn-primary">Submit A Report</a>
+    {% endif %}
+  </main>
+
+  {% include 'footer.html' %}
+</body>
+</html>

@@ -1,0 +1,151 @@
+html, body {
+    height: 100%; /* Keep as fallback */
+    min-height: 100vh; /* Ensures at least the height of the viewport */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+@media (max-width: 768px) {
+    main {
+        margin-bottom: 150px; /* Increased spacing for smaller screens */
+    }
+}
+
+:root {
+    --uva-blue: #232d4b;
+    --uva-orange: #f56600;
+    --uva-light-blue: #242e4d;  /* Existing muted light blue */
+    --uva-very-light-blue: #5a82d8;  /* New lighter blue for hover */
+    --uva-dark-blue: #00214d;
+    --uva-text: #333;
+    --uva-secondary: #f7f9fa;
+}
+
+.d-grid .btn-custom {
+    color: #ffffff;
+    /* Black text color */
+    background-color: var(--uva-blue);
+    border-color: var(--uva-blue);
+}
+
+.d-grid .btn-custom:hover {
+    background-color: var(--uva-light-blue);
+    /* Slightly darker background color on hover */
+    color: #090000;
+    /* White text color on hover */
+}
+
+.d-grid .btn-custom:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 53, 245, 0.5);
+    /* Shadow with orange tint for focus */
+}
+
+.d-grid .btn-custom2 {
+    color: var(--uva-blue);
+    /* Blue text color */
+    background-color: #ffffff;
+    /* White background color */
+    border-color: var(--uva-blue);
+}
+
+.d-grid .btn-custom2:hover {
+    background-color: var(--uva-light-blue);
+    /* Light blue background color on hover */
+    color: var(--uva-blue);
+    /* Blue text color on hover */
+}
+
+.d-grid .btn-custom2:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 53, 245, 0.5);
+    /* Shadow with blue tint for focus */
+}
+
+.d-grid .btn-primary {
+    margin-top:20px;
+    margin-bottom: 20px;
+    background-color: var(--uva-orange);
+    border-color: var(--uva-orange);
+    color: white;
+    /* Text color is white by default */
+    transition: background-color 0.3s ease;
+    /* Smooth transition for hover effect */
+
+    border-radius: .9rem;
+    /* Optional: Rounds the corners of the buttons */
+    padding: 10px 10px;
+}
+
+.d-grid .btn-primary:hover {
+    background-color: #ff7f50;
+    /* Lighter orange for hover */
+    border-color: #ff7f50;
+    /* Lighter border color for hover */
+    color: white;
+    /* Text color remains white on hover */
+}
+
+.d-grid .btn-primary:focus {
+    box-shadow: 0 0 0 0.25rem rgba(245, 102, 0, 0.5);
+    /* Shadow with orange tint for focus */
+}
+
+.d-grid .btn-secondary {
+    color: #ffffff;  /* White text color */
+    background-color: var(--uva-blue);  /* Muted light blue */
+    border-color: var(--uva-blue);
+    transition: background-color 0.3s ease;  /* Smooth transition for hover effect */
+    border-radius: 0.9rem;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.d-grid .btn-secondary:hover {
+    background-color: var(--uva-light-blue);  /* Lighter blue for hover */
+    color:  #090000 ; /* Text color remains white on hover */
+  
+}
+
+.d-grid .btn-tertiary {
+    color: #232d4b;  /* White text color */
+    background-color: #ffffff;  /* Dark blue */
+    border-color: #ffffff;  /* Dark blue */
+    transition: background-color 0.3s ease;  /* Smooth transition for hover effect */
+    border-radius: 0.9rem;
+    margin-top: 10px;
+}
+
+.d-grid .btn-tertiary:hover {
+    background-color: #ffffff;  /* White background color on hover */
+    color: #232d4bff;  /* Dark blue text color on hover */
+    border-color: #cecece;  /* Dark blue border color on hover */
+}
+
+.context-box {
+    border: 2px solid black;
+    background-color: white;
+    padding: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+
+.d-grid .btn-primary2 {
+    margin-top:20px;
+    margin-bottom: 20px;
+    color: #ffffff;  /* White text color */
+    background-color: var(--uva-blue);  /* Muted light blue */
+    border-color: var(--uva-blue);
+    transition: background-color 0.3s ease;
+    border-radius: .9rem;
+    padding: 10px 10px;
+}
+
+
+.d-grid .btn-primary2:hover {
+    background-color: var(--uva-light-blue);  /* Lighter blue for hover */
+    color:  #090000 ;
+}
+

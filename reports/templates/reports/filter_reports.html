@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+<style>
+    .context-box {
+    border: 1px solid #cccccc; /* Example: sets a grey border */
+    padding: 15px;
+    overflow-x: auto;
+    }
+    .table-wrapper {
+        max-width: 100%;
+        /* Ensure the wrapper div is not wider than the viewport */
+        overflow-x: auto;
+        /* Enable horizontal scrollbar when content overflows */
+        overflow-y: hidden;
+        /* Hide vertical scrollbar */
+    }
+    .table {
+        min-width: 100%;
+        /* Ensure the table occupies at least the width of the wrapper */
+    }
+    main {
+        min-height: 100vh;
+    }
+
+</style>
+
+{% block content %}
+     <div class="d-flex flex-column min-vh-100">
+<main>
+    <div class="context-box">
+<div class="container">
+    <h3>{{ user.userprofile.residence }} Reports</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <div class="accordion" id="filterAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="filterHeading">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="true" aria-controls="filterCollapse">
+                                More Filters
+                            </button>
+                        </h2>
+                        <div id="filterCollapse" class="accordion-collapse collapse" aria-labelledby="filterHeading" data-bs-parent="#filterAccordion">
+                            <div class="accordion-body">
+                                <div class="mb-2">
+                                    <input type="checkbox" id="buildingFilter">
+                                    <label for="buildingFilter" class="form-label">Filter by your Building (<span id="buildingLabel">{{ user.userprofile.building }}</span>)</label>
+                                </div>
+                                <div class="mb-2">
+                                    <input type="checkbox" id="floorFilter" onclick="checkBuildingCheckbox()">
+                                    <label for="floorFilter" class="form-label">Filter by your Floor (<span id="floorLabel">{{ user.userprofile.floor }}</span>)</label>
+                                </div>
+
+                                <div class="d-grid gap-3 d-md-flex justify-content-md-start h-100">
+                                    <button type="button" class="btn btn-custom2" onclick="resetFilters()">Reset Filters</button>
+                                    <button type="button" class="btn btn-custom" onclick="applyFilters()">Apply Filters</button>
+                                </div>
+                                <br>
+                                <h6>*Filters don't apply to Resolved Reports</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <!-- This div holds both the accordion and the button -->
+                <div class="d-flex flex-column justify-content-between h-100">
+                    <!-- Button to toggle visibility of resolved reports -->
+                    <div class="d-grid gap-3 d-md-flex justify-content-md-start">
+                        <button type="button" class="btn btn-custom" id="toggleResolvedReports">View Resolved Reports</button>
+                    </div>
+                    <!-- Placeholder for additional content -->
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        {% if report.status != "Resolved" %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>STATUS</th>
+                    <th>DATE</th>
+                    <th>TYPE</th>
+                    <th>LOCATION</th>
+                    <th>ADDITIONAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in reports %}
+                {% if report.status != "Resolved" %}
+
+                <tr class="report-row" data-building="{{ report.building }}" data-floor="{{ report.floor }}"
+                    style="cursor: pointer;" onclick="window.location.href='{% url 'report_detail' report.id %}'">
+                    <td>{{ report.status }}</td>
+                    <td>{{ report.submission_timestamp }}</td>
+                    <td>{{ report.report_type }}</td>
+                    <td>{{ report.residence }}</td>
+                    <td>
+                        {% if report.building %}
+                        Building: {{ report.building }}<br>
+                        {% endif %}
+                        {% if report.floor %}
+                        Floor: {{ report.floor }}<br>
+                        {% endif %}
+                        {% if report.room %}
+                        Room: {{ report.room }}<br>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No reports found.</p>
+        {% endif %}
+
+        <!-- Resolved Reports -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="resolvedReportsHeading">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#resolvedReportsCollapse" aria-expanded="false"
+                    aria-controls="resolvedReportsCollapse">
+                    Resolved Reports
+                </button>
+            </h2>
+            <div id="resolvedReportsCollapse" class="accordion-collapse collapse"
+                aria-labelledby="resolvedReportsHeading" data-bs-parent="#reportAccordion">
+                <div class="accordion-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>DATE</th>
+                                <th>TYPE</th>
+                                <th>LOCATION</th>
+                                <th>ADDITIONAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for group in request.user.groups.all %}
+                            {% if group.name == 'Site Admins' %}
+                            {% for report in reports %}
+                            {% if report.status == 'Resolved' %}
+                            <tr style="cursor: pointer;"
+                                onclick="window.location.href='{% url 'report_detail' report.id %}'">
+                                <td>{{ report.submission_timestamp }}</td>
+                                <td>{{ report.report_type }}</td>
+                                <td>{{ report.residence }}</td>
+                                <td>
+                                    {% if report.building %}
+                                    Building: {{ report.building }}<br>
+                                    {% endif %}
+                                    {% if report.floor %}
+                                    Floor: {{ report.floor }}<br>
+                                    {% endif %}
+                                    {% if report.room %}
+                                    Room: {{ report.room }}<br>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                            {% else %}
+                            {% for report in reports %}
+                            {% if report.user.username == user.username %}
+                            {% if report.status == 'Resolved' %}
+                            <tr style="cursor: pointer;"
+                                onclick="window.location.href='{% url 'report_detail' report.id %}'">
+                                <td>{{ report.submission_timestamp }}</td>
+                                <td>{{ report.report_type }}</td>
+                                <td>{{ report.residence }}</td>
+                                <td>
+                                    {% if report.building %}
+                                    Building: {{ report.building }}<br>
+                                    {% endif %}
+                                    {% if report.floor %}
+                                    Floor: {{ report.floor }}<br>
+                                    {% endif %}
+                                    {% if report.room %}
+                                    Room: {{ report.room }}<br>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+
+        <script>
+            window.onload = function () {
+                document.getElementById("buildingLabel").innerText = "{{ user.userprofile.building }}";
+                document.getElementById("floorLabel").innerText = "{{ user.userprofile.floor }}";
+            };
+            function applyFilters() {
+                var buildingFilter = document.getElementById("buildingFilter").checked;
+                var floorFilter = document.getElementById("floorFilter").checked;
+                var reportRows = document.getElementsByClassName("report-row");
+                for (var i = 0; i < reportRows.length; i++) {
+                    var row = reportRows[i];
+                    var building = row.getAttribute("data-building");
+                    var floor = row.getAttribute("data-floor");
+        
+                    if ((buildingFilter && building !== "{{ user.userprofile.building }}") || (floorFilter && floor !== "{{ user.userprofile.floor }}")) {
+                        row.style.display = "none";
+                    } else {
+                        row.style.display = "table-row";
+                    }
+                }
+            }
+            function resetFilters() {
+                document.getElementById("buildingFilter").checked = false;
+                document.getElementById("floorFilter").checked = false;
+            }
+
+            function checkBuildingCheckbox() {
+                var floorCheckbox = document.getElementById("floorFilter");
+                var buildingCheckbox = document.getElementById("buildingFilter");
+                if (floorCheckbox.checked) {
+                    buildingCheckbox.checked = true;
+                }
+            }
+
+            // JavaScript function to toggle visibility of resolved reports section and scroll to it
+            function toggleResolvedReports() {
+                var resolvedReportsSection = document.getElementById("resolvedReportsCollapse");
+                var button = document.getElementById("toggleResolvedReports");
+                // Toggle the 'collapsed' class on the button
+                button.classList.toggle('collapsed');
+                // Toggle the 'collapse' class on the resolved reports section
+                resolvedReportsSection.classList.toggle('collapse');
+                // Toggle the 'aria-expanded' attribute on the button
+                var ariaExpanded = button.getAttribute('aria-expanded') === 'true' || false;
+                button.setAttribute('aria-expanded', !ariaExpanded);
+                // Scroll to the resolved reports section
+                resolvedReportsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+            // Attach click event listener to the button
+            document.getElementById("toggleResolvedReports").addEventListener("click", toggleResolvedReports);
+        </script>
+        
+    
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-center">
+        <a class="btn btn-primary me-md-2" href="/">Return Home</a>
+    </div>
+</main>
+<footer class="text-center text-lg-start bg-body-tertiary text-muted" style="display: flex; justify-content: center; align-items: center;">
+    <div class="footer-content">
+        © 2024 Copyright:
+        <a class="text-reset fw-bold" href="{% url 'disclaimer' %}">Disclaimer</a>
+    </div>
+</footer>
+ </div>
+{% endblock %}
+
+
+
+
+

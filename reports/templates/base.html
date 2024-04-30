@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    <!-- Include any CSS or JavaScript files here -->
+</head>
+<style>
+    html, body {
+        height: 100%; /* Keep as fallback */
+        min-height: 100vh; /* Ensures at least the height of the viewport */
+        margin: 0%;
+        padding: 0;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        flex: 1 0 auto;
+    }
+    
+    main {
+        margin-top: 20px;
+        margin-bottom: 40px;
+        padding-top: 20px;
+        flex: 1;
+    }
+    footer {
+    clear: both;
+    }
+
+
+</style>
+
+<body>
+    {% include 'navbar.html' %}
+    <!-- Header -->
+    <header>
+        <!-- Navigation menu, logo, etc. -->
+    </header>
+   
+
+    <!-- Main content -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+ 
+    </footer>
+    
+</body>
+</html>

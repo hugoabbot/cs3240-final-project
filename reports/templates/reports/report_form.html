@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<main>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col"></div> <!-- Left padding column -->
+        <div class="col-md-6"> <!-- Middle column for card and form -->
+            <div class="card p-4">
+                <h2>Report: {{ selected_residence }}</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Building</label>
+                        <select class="form-select" name="building">
+                        <option value="">--- Select Building ---</option>
+                        {% for building in buildings %}
+                            <option value="{{ building }}">{{ building }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">Floor</label>
+                            <input type="text" class="form-control" name="floor">
+                         </div>
+                        <div class="col">
+                            <label class="form-label">Room</label>
+                            <input type="text" class="form-control" name="room">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Report Type *</label>
+                        <select class="form-select" name="report_type" required>
+                            {% for value, label in form.fields.report_type.choices %}
+                            <option value="{{ value }}">{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Message * </label>
+                        <textarea class="form-control" name="report_text" rows="4" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">File Upload (.jpg, .pdf, .txt)</label>
+                        <input type="file" class="form-control" name="report_file">
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end gap-2 h-100">
+                        <a href="{% url 'select_residence' residence_type=residence_type %}" class="btn btn-primary2">Back</a>
+                        <button type="submit" class="btn btn-primary me-md-2">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col"></div> <!-- Right padding column -->
+    </div>
+</div>
+
+    {% include 'footer.html' %}
+
+{% endblock %}
+</main>
