@@ -40,7 +40,7 @@ The project was designed and built in a group effort of four members:
 - Megan Lewis, Testing Manager (nxk7tq)
 - Hugo Abbot, Software Architect (drt3sm)
 
-Additional information on the positions and the respective responsibilities can be viewed on the project details [page](https://s24.cs3240.org/project.html#team-roles)
+Additional information on the positions and the respective responsibilities can be viewed on the project details [page](https://s24.cs3240.org/project.html#team-roles).
 
 ## License
 
