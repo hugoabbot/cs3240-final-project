@@ -1,49 +1,46 @@
 # RA.Connect
 
-
-
-## Original README.md
-
 RA.Connect is a web application designed to streamline University of Virginia dorm residents to their resident advisors (RAs). The project was a semester-long group [assignment](https://s24.cs3240.org/project.html#project-overview) for CS 3240 (Advanced Software Development Techniques) and should **not** be used for serious reports.
 
-## Online Usage
+## Installation
 
-The web app can be directly accessed and tested through our [Heroku](https://b-30-a1951ad3d5cd.herokuapp.com/) deployment.
+First, clone the repository on your local machine:
 
-## Local Installation
+```bash
+git clone <repo_link.git>
+```
 
-If your usage is only local, use the package manager [pip](https://pip.pypa.io/en/stable/) to install the dependencies listed on the provided requirements.txt file.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the dependencies listed in `requirements.txt`:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Furthermore, the following inputs should be made in the root directory to make sure the local databse is properly configured:
+The following inputs (in presented order) are necessary to initialize and configure your local SQLite database:
 
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-## Local Usage
+## Usage
 
-After installation, run the following commands to start the web app:
+Run the following commands to launch the web app to the localhost IP address [http://127.0.0.1:8000/](http://127.0.0.1:8000/):
 
 ```bash
 python manage.py runserver
 ```
 
-and access it through the link [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
+## Group
 
-## Contributions
+The project was designed and built in a group effort of four members:
 
-The group members were divided into the following roles, the responsibilites of which can be viewed on the project details [page](https://s24.cs3240.org/project.html#team-roles):
-
-- Price Mckinney, Scrum Master (wpm7hs)
 - Yanson Khuu, DevOps Manager (fbx2jt)
 - Kaitlyn Kreth, Requirements Manager (qte7kg)
 - Megan Lewis, Testing Manager (nxk7tq)
 - Hugo Abbot, Software Architect (drt3sm)
+
+Additional information on the positions and the respective responsibilities can be viewed on the project details [page](https://s24.cs3240.org/project.html#team-roles)
 
 ## License
 
