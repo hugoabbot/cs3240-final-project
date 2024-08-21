@@ -1,5 +1,8 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/qgEWmaMc)
 # RA.Connect
+
+
+
+## Original README.md
 
 RA.Connect is a web application designed to streamline University of Virginia dorm residents to their resident advisors (RAs). The project was a semester-long group [assignment](https://s24.cs3240.org/project.html#project-overview) for CS 3240 (Advanced Software Development Techniques) and should **not** be used for serious reports.
 
